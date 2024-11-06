@@ -4,20 +4,36 @@ use clap::{Parser, Subcommand};
 pub struct Cli {
 
     /*
-    * Allows user to pass argument with short flag -p, and long flag --path.
-    * If no argument is passed it defaults to '.'
-    */
-    #[arg(short, long, default_value = ".")]
-    pub path: String,
-    
-    /*
     * Allow user to set verbose flag with -v or --verbose, for debugging capabilities
     */
     #[arg(short, long, action = clap::ArgAction::SetTrue)]
     pub verbose: bool,
 
-    #[arg(short, long, default_value="no output specified")]
-    pub output: String,
+    #[arg(short, long, default_value = "text" )]
+    pub output: OutputFormat,
+
+    #[command(subcommand)]
+    pub command: Commands,
+}
+
+#[derive(clap::ValueEnum, Clone)]
+pub enum OutputFormat {
+    Text,
+    Json,
+    File,
+}
+
+#[derive(Subcommand)]
+pub enum Commands {
+
+    List {
+        #[arg(short, long, default_value = ".")]
+        path: String,
+    },
+    Tree {
+        #[arg(short, long, default_value = ".")]
+        path: String,
+    }
 }
 
 pub fn parse_args() -> Cli {

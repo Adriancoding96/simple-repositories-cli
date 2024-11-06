@@ -1,14 +1,17 @@
-use simrep_cli::cli::parse_args;
+use simrep_cli::cli::{parse_args, Commands};
 
 fn main() {
     let args = parse_args();
 
-    let path = args.path;
     let verbose = args.verbose;
     let output_format = args.output;
 
-    //For debugging purposes
-    println!("Path: {}", path);
-    println!("Verbose: {}", verbose);
-    println!("Output Format: {}", output_format);
+    match args.command {
+        Commands::List { path } => {
+            println!("Listing directory: {}", path);
+        }
+        Commands::Tree { path } => {
+            println!("Listing tree for directory: {}", path);
+        }
+    }
 }
