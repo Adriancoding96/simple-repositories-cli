@@ -1,3 +1,3 @@
 fn main() {
-    println!("Hello, world!");
+    simrep_cli::cli::run();
 }
