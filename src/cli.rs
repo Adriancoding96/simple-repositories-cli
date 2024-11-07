@@ -44,6 +44,10 @@ pub enum Commands {
     Tree {
         #[arg(short, long, default_value = ".")]
         path: String,
+    },
+    Init {
+        #[arg(short, long, default_value = ".")]
+        path: String,
     }
 }
 

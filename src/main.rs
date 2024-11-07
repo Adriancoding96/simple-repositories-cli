@@ -4,6 +4,7 @@ mod core;
 mod model;
 mod output;
 mod json_writer;
+mod env;
 
 use crate::cli::{parse_args, Commands};
 use crate::fs_traversal::traverse_directory;
@@ -11,6 +12,7 @@ use crate::model::directory_node::DirectoryNode;
 use crate::core::config::Config;
 use crate::output::print::print_tree;
 use crate::json_writer::directory_tree_writer::write_tree_to_file;
+use crate::env::init_simrep::init_home_dir;
 
 use std::path::Path;
 
@@ -45,6 +47,10 @@ fn command(config: &Config) -> std::io::Result<()> {
         Commands::Tree { path } => {
             print_tree_from_path(path);
         }
+        Commands::Init { path } => {
+            initiate_env();
+        }    
+    
     }
     Ok(())
 }
@@ -77,4 +83,9 @@ fn create_tree_from_path(path: &str) -> DirectoryNode {
     let root_dir: DirectoryNode = traverse_directory(Path::new(&path))
         .expect("Failed to traverse directory tree");
     root_dir
+}
+
+fn initiate_env() -> std::io::Result<()> {
+    init_home_dir()?;
+    Ok(())
 }
