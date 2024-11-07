@@ -1,5 +1,5 @@
 use serde::Serialize;
-use super::file_node::FileNode;
+use crate::model::file_node::FileNode;
 
 /*
 * FileNode implements Debug and Serialize
