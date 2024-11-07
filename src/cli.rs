@@ -25,8 +25,19 @@ pub enum OutputFormat {
 
 #[derive(Subcommand)]
 pub enum Commands {
-
-    List {
+    Origin {
+        #[arg(short, long, default_value = ".")]
+        path: String,
+    },
+    Add {
+        #[arg(short, long, default_value = ".")]
+        path: String,
+    },
+    Commit {
+        #[arg(short, long, default_value = ".")]
+        path: String,
+    },
+    Push {
         #[arg(short, long, default_value = ".")]
         path: String,
     },

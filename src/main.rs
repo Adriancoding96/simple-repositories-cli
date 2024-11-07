@@ -4,7 +4,6 @@ mod core;
 mod model;
 mod output;
 
-
 use crate::cli::{parse_args, Commands};
 use crate::fs_traversal::traverse_directory;
 use crate::model::directory_node::DirectoryNode;
@@ -22,43 +21,49 @@ fn main() {
         verbose: args.verbose,
     };
     
-    if config.verbose {
-        start_debug(&config);
-    } else {
-        start(&config);
-    }
-                
+    command(&config);
+
 }
 
-fn start(config: &Config) {
-    match &config.command {
-        Commands::List { path } => {
-            let root_dir: DirectoryNode = traverse_directory(Path::new(&path))
-                .expect("Failed to traverse directory");
-            println!("No need to print a list structure");            //Output result
+fn command(config: &Config) {
+    match &config.command { 
+        Commands::Origin { path } => {
+            add_origin();
+        }
+        Commands::Add { path } => {
+            create_tree_file();
+        }
+        Commands::Commit { path } => {
+            create_commit();        
+        }
+        Commands::Push { path } => { 
+            push_commit();
         }
         Commands::Tree { path } => {
-            let root_dir: DirectoryNode = traverse_directory(Path::new(&path))
-                .expect("Failed to traverse directory");
-            print_tree(&root_dir, 0);
+            print_tree_from_path(path);
         }
     }
 }
 
-fn start_debug(config: &Config) {
-    println!("Debug mode enabled");
-    match &config.command {
-        Commands::List { path } => {
-            println!("Executing 'List' command on path: {}", path);
-            let root_dir: DirectoryNode = traverse_directory(Path::new(&path))
-                .expect("Failed to traverse directory");
-            println!("No need to print a list structure");
-        }
-        Commands::Tree { path } => {
-            println!("Executing 'Tree' command on path: {}", path);
-            let root_dir: DirectoryNode = traverse_directory(Path::new(&path))
-                .expect("Failed to traverse directory");
-            print_tree(&root_dir, 0);
-        }
-    }
+fn add_origin() {
+
 }
+
+fn create_tree_file() {
+
+}
+
+fn create_commit() {
+
+}
+
+fn push_commit() {
+
+}
+
+fn print_tree_from_path(path: &String) {
+    let root_dir: DirectoryNode = traverse_directory(Path::new(&path))
+        .expect("Failed to traverse directory tree");
+    print_tree(&root_dir, 0);
+}
+
