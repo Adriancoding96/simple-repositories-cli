@@ -16,7 +16,8 @@ pub fn write_tree_to_file(root_dir: &DirectoryNode) -> std::io::Result<()> {
     let json = convert_tree_to_json(&root_dir);
     let dir_path: Vec<&str> = vec!["simrep", "env"];
     let env_dir = locate_dir(&dir_path)?;
-    let mut file = File::create(&env_dir)?;
+    let file_path = env_dir.join("data.json");
+    let mut file = File::create(&file_path)?;
     file.write_all(json.as_bytes())?;
     Ok(())
 }
