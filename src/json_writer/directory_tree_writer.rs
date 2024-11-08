@@ -28,4 +28,3 @@ fn convert_tree_to_json(root_dir: &DirectoryNode) -> String {
         .expect("Failed to serialize directory tree to JSON");
     json
 }
-
