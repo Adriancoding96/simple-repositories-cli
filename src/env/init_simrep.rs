@@ -12,6 +12,7 @@ pub fn init_home_dir() -> std::io::Result<()> {
     fs::create_dir_all(&simrep_dir)?;
     init_env_dir(&simrep_dir)?;
     init_commit_dir(&simrep_dir)?;
+    init_auth_dir(&simrep_dir)?;
     Ok(())
 }
 
@@ -32,3 +33,29 @@ fn init_commit_dir(simrep_dir: &PathBuf) -> std::io::Result<()> {
     fs::create_dir_all(&commit_dir)?;
     Ok(())
 }
+
+fn init_auth_dir(simrep_dir: &PathBuf) -> std::io::Result<()> {
+    let auth_dir: PathBuf = simrep_dir.join(".auth");
+    
+    #[cfg(unix)]
+    init_auth_dir_unix(&auth_dir)?;
+
+    #[cfg(windows)]
+    init_auth_dir_windows(&auth_dir)?;
+
+    Ok(())
+}
+
+#[cfg(unix)]
+fn init_auth_dir_unix(auth_dir: &PathBuf) -> std::io::Result<()> {
+    fs::create_dir_all(auth_dir)?;
+    Ok(())
+}
+
+#[cfg(windows)]
+fn init_auth_dir_windows(auth_dir: &PathBuf) -> std::io::Result<()> {
+    fs::create_dir_all(auth_dir)?;
+    Ok(())
+}
+
+
