@@ -61,8 +61,7 @@ fn add_origin() {
 
 fn create_tree_file(path: &str) -> std::io::Result<()>{
     let root_dir = create_tree_from_path(path);
-    let output_path: &str = "directory_tree.json";
-    write_tree_to_file(&root_dir, output_path)?;
+    write_tree_to_file(&root_dir)?;
     Ok(())
 }
 
