@@ -27,27 +27,24 @@ pub enum OutputFormat {
 pub enum Commands {
     Origin {
         #[arg(short, long, default_value = ".")]
-        path: String,
+        url: String,
     },
     Add {
         #[arg(short, long, default_value = ".")]
         path: String,
     },
     Commit {
-        #[arg(short, long, default_value = ".")]
-        path: String,
+        #[arg(short, long)]
+        message: String,
     },
     Push {
-        #[arg(short, long, default_value = ".")]
-        path: String,
+        hash: Option<String>,
     },
     Tree {
         #[arg(short, long, default_value = ".")]
         path: String,
     },
     Init {
-        #[arg(short, long, default_value = ".")]
-        path: String,
     }
 }
 

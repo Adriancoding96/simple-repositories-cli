@@ -32,22 +32,22 @@ fn main() -> std::io::Result<()> {
 
 fn command(config: &Config) -> std::io::Result<()> {
     match &config.command { 
-        Commands::Origin { path } => {
+        Commands::Origin { url } => {
             add_origin();
         }
         Commands::Add { path } => {
             create_tree_file(path)?;
         }
-        Commands::Commit { path } => {
+        Commands::Commit { message } => {
             create_commit();        
         }
-        Commands::Push { path } => { 
+        Commands::Push { hash } => { 
             push_commit();
         }
         Commands::Tree { path } => {
             print_tree_from_path(path);
         }
-        Commands::Init { path } => {
+        Commands::Init { } => {
             initiate_env();
         }    
     
