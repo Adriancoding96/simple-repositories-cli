@@ -1,4 +1,4 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use crate::model::branch::Branch;
 use crate::model::directory_node::DirectoryNode;
 use crate::model::file_node::FileNode;
@@ -8,7 +8,7 @@ use crate::model::project::Project;
 * Content enum to make content in Commit struct to be able
 * to accept either Project, DirectoryNode, or FileNode
 */
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 enum Content {
     Project(Project),
     Directory(DirectoryNode),

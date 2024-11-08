@@ -1,9 +1,11 @@
 use std::fs::File;
 use std::io::Write;
 use serde_json;
+use uuid::Uuid;
 
 use crate::model::commit::Commit;
-use crate::env::dir_search::locate_dir;
+use crate::env::system_search::locate_dir;
+
 /*
 * Writes commit data to a commit file in home/simrep/commit directory
 *
@@ -13,7 +15,8 @@ pub fn write_commit(commit: &Commit) -> std::io::Result<()> {
     let json = convert_commit_to_json(&commit);
     let dir_path: Vec<&str> = vec!["simrep", "commit"];
     let commit_dir = locate_dir(&dir_path)?;
-    let mut file = File::create(commit_dir)?;
+    let file_name = generate_file_name();
+    let mut file = File::create(&file_name)?;
     file.write_all(json.as_bytes())?;
     Ok(())
 }
@@ -27,4 +30,11 @@ fn convert_commit_to_json(commit: &Commit) -> String {
     let json = serde_json::to_string_pretty(commit)
         .expect("Failed to serialize commit to JSON");
     json
+}
+
+fn generate_file_name() -> String {
+    let uuid: Uuid = Uuid::new_v4();
+    let mut file_name: String = uuid.to_string();
+    file_name.push_str(".json");
+    file_name
 }

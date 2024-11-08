@@ -3,7 +3,7 @@ use std::io::Write;
 use serde_json;
 
 use crate::model::directory_node::DirectoryNode;
-use crate::env::dir_search::locate_dir;
+use crate::env::system_search::locate_dir;
 
 /*
 * Function to create a file for specified path, populates it with JSON
