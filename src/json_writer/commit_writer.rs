@@ -32,6 +32,11 @@ fn convert_commit_to_json(commit: &Commit) -> String {
     json
 }
 
+/*
+* Generates file name with a randomised uuid
+*
+* @return file_name: returns a file name as a String
+*/
 fn generate_file_name() -> String {
     let uuid: Uuid = Uuid::new_v4();
     let mut file_name: String = uuid.to_string();

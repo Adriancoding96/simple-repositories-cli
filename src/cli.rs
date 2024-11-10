@@ -45,6 +45,13 @@ pub enum Commands {
         path: String,
     },
     Init {
+    },
+    Auth {
+        #[arg(short, long)]
+        email: String,
+
+        #[arg(short, long)]
+        password: String,
     }
 }
 

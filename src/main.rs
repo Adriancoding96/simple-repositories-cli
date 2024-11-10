@@ -12,6 +12,7 @@ use crate::model::directory_node::DirectoryNode;
 use crate::core::config::Config;
 use crate::output::print::print_tree;
 use crate::json_writer::directory_tree_writer::write_tree_to_file;
+use crate::json_writer::auth_writer::write_auth;
 use crate::env::init_simrep::init_home_dir;
 
 use std::path::Path;
@@ -49,7 +50,10 @@ fn command(config: &Config) -> std::io::Result<()> {
         }
         Commands::Init { } => {
             initiate_env();
-        }    
+        }
+        Commands::Auth { email, password} => {
+            auth(email, password);
+        }
     
     }
     Ok(())
@@ -86,5 +90,10 @@ fn create_tree_from_path(path: &str) -> DirectoryNode {
 
 fn initiate_env() -> std::io::Result<()> {
     init_home_dir()?;
+    Ok(())
+}
+
+fn auth(email: &str, password: &str) -> std::io::Result<()> {
+    write_auth(email, password)?;
     Ok(())
 }
