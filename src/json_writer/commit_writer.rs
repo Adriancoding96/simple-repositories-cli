@@ -19,7 +19,8 @@ pub fn write_commit(commit: &Commit) -> std::io::Result<()> {
     let dir_path: Vec<&str> = vec!["simrep", "commit"];
     let commit_dir = locate_dir(&dir_path)?;
     let file_name = generate_file_name();
-    let mut file = File::create(&file_name)?;
+    let file_path = commit_dir.join(file_name);
+    let mut file = File::create(&file_path)?;
     file.write_all(json.as_bytes())?;
     Ok(())
 }

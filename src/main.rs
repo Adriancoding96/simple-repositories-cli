@@ -6,6 +6,10 @@ mod output;
 mod json_writer;
 mod env;
 
+use json_writer::branch_writer::write_branch;
+use model::branch::Branch;
+use simrep_cli::json_writer::branch_writer;
+
 use crate::cli::{parse_args, Commands};
 use crate::fs_traversal::traverse_directory;
 use crate::model::directory_node::DirectoryNode;
@@ -55,6 +59,9 @@ fn command(config: &Config) -> std::io::Result<()> {
         Commands::Auth { email, password } => {
             auth(email, password);
         }
+        Commands::Branch { branch } => {
+            set_branch(branch);
+        }
     
     }
     Ok(())
@@ -97,5 +104,13 @@ fn initiate_env() -> std::io::Result<()> {
 
 fn auth(email: &str, password: &str) -> std::io::Result<()> {
     write_auth(email, password)?;
+    Ok(())
+}
+
+fn set_branch(branch: &str) -> std::io::Result<()> {
+    let branch: Branch = Branch {
+        branch_name: branch.to_owned(),
+    };
+    write_branch(&branch)?;
     Ok(())
 }

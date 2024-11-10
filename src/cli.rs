@@ -38,7 +38,7 @@ pub enum Commands {
         message: String,
     },
     Push {
-         #[arg(short, long)]
+        #[arg(short, long)]
         email: String,
 
         #[arg(short, long)]
@@ -56,7 +56,12 @@ pub enum Commands {
 
         #[arg(short, long)]
         password: String,
+    },
+    Branch {
+        #[arg(short, long)]
+        branch: String,
     }
+    
 }
 
 pub fn parse_args() -> Cli {
