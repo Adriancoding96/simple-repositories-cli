@@ -6,6 +6,9 @@ use uuid::Uuid;
 use crate::model::commit::Commit;
 use crate::env::system_search::locate_dir;
 
+ 
+
+
 /*
 * Writes commit data to a commit file in home/simrep/commit directory
 *

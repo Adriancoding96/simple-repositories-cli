@@ -38,7 +38,11 @@ pub enum Commands {
         message: String,
     },
     Push {
-        hash: Option<String>,
+         #[arg(short, long)]
+        email: String,
+
+        #[arg(short, long)]
+        password: String,
     },
     Tree {
         #[arg(short, long, default_value = ".")]

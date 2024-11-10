@@ -15,6 +15,7 @@ use crate::json_writer::directory_tree_writer::write_tree_to_file;
 use crate::json_writer::auth_writer::write_auth;
 use crate::env::init_simrep::init_home_dir;
 
+use core::commit_builder::initiate_commit;
 use std::path::Path;
 
 fn main() -> std::io::Result<()> {
@@ -40,9 +41,9 @@ fn command(config: &Config) -> std::io::Result<()> {
             create_tree_file(path)?;
         }
         Commands::Commit { message } => {
-            create_commit();        
+            create_commit(message);        
         }
-        Commands::Push { hash } => { 
+        Commands::Push { email, password } => { 
             push_commit();
         }
         Commands::Tree { path } => {
@@ -51,7 +52,7 @@ fn command(config: &Config) -> std::io::Result<()> {
         Commands::Init { } => {
             initiate_env();
         }
-        Commands::Auth { email, password} => {
+        Commands::Auth { email, password } => {
             auth(email, password);
         }
     
@@ -69,8 +70,9 @@ fn create_tree_file(path: &str) -> std::io::Result<()>{
     Ok(())
 }
 
-fn create_commit() {
-
+fn create_commit(message: &str) -> std::io::Result<()>{
+    initiate_commit(message)?;
+    Ok(())
 }
 
 fn push_commit() {

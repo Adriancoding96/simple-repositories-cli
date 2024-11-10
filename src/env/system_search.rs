@@ -1,5 +1,6 @@
 use std::path::PathBuf;
 use dirs::home_dir;
+use std::fs::File;
 
 /*
 * Function to locate and return path to directory from path starting from home/user directory
@@ -48,6 +49,19 @@ pub fn locate_file(file_path: &Vec<&str>) -> std::io::Result<PathBuf> {
             format!("File {:?} does not exist", expected_file),
         ))
     }
+}
+
+/*
+* Extracts content of file and returns the value
+*
+* @param path: vector containing path to file
+* @return value: contains data extracted from file
+*/
+pub fn get_file_value(path: &Vec<&str>) -> std::io::Result<(serde_json::Value)> {
+    let file_path: PathBuf = locate_file(path)?;
+    let file: File = File::open(&file_path)?;
+    let value: serde_json::Value = serde_json::from_reader(file)?;   
+    Ok(value)
 }
 
 /*
