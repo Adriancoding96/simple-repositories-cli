@@ -5,10 +5,10 @@ mod model;
 mod output;
 mod json_writer;
 mod env;
+mod error;
 
 use json_writer::branch_writer::write_branch;
 use model::branch::Branch;
-use simrep_cli::json_writer::branch_writer;
 
 use crate::cli::{parse_args, Commands};
 use crate::fs_traversal::traverse_directory;
@@ -18,12 +18,13 @@ use crate::output::print::print_tree;
 use crate::json_writer::directory_tree_writer::write_tree_to_file;
 use crate::json_writer::auth_writer::write_auth;
 use crate::env::init_simrep::init_home_dir;
+use crate::error::error_handler::RequestError;
 
 use core::commit_builder::initiate_commit;
 use std::path::Path;
 
 #[tokio::main]
-async fn main() -> std::io::Result<()> {
+async fn main() -> Result<(), RequestError> {
     let args = parse_args();
    
     let config = Config {
