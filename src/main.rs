@@ -22,7 +22,8 @@ use crate::env::init_simrep::init_home_dir;
 use core::commit_builder::initiate_commit;
 use std::path::Path;
 
-fn main() -> std::io::Result<()> {
+#[tokio::main]
+async fn main() -> std::io::Result<()> {
     let args = parse_args();
    
     let config = Config {
