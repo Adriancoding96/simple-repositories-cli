@@ -6,19 +6,22 @@ mod output;
 mod json_writer;
 mod env;
 mod error;
-
-use json_writer::branch_writer::write_branch;
-use model::branch::Branch;
+mod api;
 
 use crate::cli::{parse_args, Commands};
 use crate::fs_traversal::traverse_directory;
 use crate::model::directory_node::DirectoryNode;
+use crate::model::user::User;
+use crate::model::auth::Auth;
+use crate::model::branch::Branch;
 use crate::core::config::Config;
 use crate::output::print::print_tree;
 use crate::json_writer::directory_tree_writer::write_tree_to_file;
 use crate::json_writer::auth_writer::write_auth;
+use crate::json_writer::branch_writer::write_branch;
 use crate::env::init_simrep::init_home_dir;
 use crate::error::error_handler::RequestError;
+use crate::api::auth_client::auth_request;
 
 use core::commit_builder::initiate_commit;
 use std::path::Path;
@@ -33,12 +36,12 @@ async fn main() -> Result<(), RequestError> {
         verbose: args.verbose,
     };
     
-    command(&config)?;
+    command(&config).await?;
     Ok(())
 
 }
 
-fn command(config: &Config) -> std::io::Result<()> {
+async fn command(config: &Config) -> Result<(), RequestError> {
     match &config.command { 
         Commands::Origin { url } => {
             add_origin();
@@ -50,7 +53,7 @@ fn command(config: &Config) -> std::io::Result<()> {
             create_commit(message);        
         }
         Commands::Push { email, password } => { 
-            push_commit();
+            push_commit(email, password).await?;
         }
         Commands::Tree { path } => {
             print_tree_from_path(path);
@@ -84,8 +87,15 @@ fn create_commit(message: &str) -> std::io::Result<()>{
     Ok(())
 }
 
-fn push_commit() {
-
+async fn push_commit(email: &str, password: &str) -> Result<(), RequestError> {
+    println!("Sending auth request");
+    let user: User = User {
+        email: email.to_owned(),
+        password: password.to_owned(),
+    };
+    let auth: Auth = auth_request(&user).await?; 
+    println!("{:?}", auth);
+    Ok(())
 }
 
 fn print_tree_from_path(path: &str) {
