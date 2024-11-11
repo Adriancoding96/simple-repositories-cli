@@ -92,7 +92,7 @@ fn print_tree_from_path(path: &str) {
 }
 
 fn create_tree_from_path(path: &str) -> DirectoryNode {
-    let root_dir: DirectoryNode = traverse_directory(Path::new(&path))
+    let root_dir: DirectoryNode = traverse_directory(Path::new(&path), 0)
         .expect("Failed to traverse directory tree");
     root_dir
 }

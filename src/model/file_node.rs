@@ -8,5 +8,6 @@ use serde::{Deserialize, Serialize};
 pub struct FileNode {
     pub name: String,
     pub path: String,
-    pub size: u64, //Size in bytes
+    #[serde(with = "serde_bytes")]
+    pub content: Vec<u8>,
 }
